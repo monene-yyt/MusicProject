@@ -1,0 +1,44 @@
+server:
+  port: 8080
+  tomcat:
+    max-swallow-size: -1
+
+# ?????
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/xm_music?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2b8&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:/mapper/*.xml
+
+
+  logging:
+    level:
+      com:
+        example:
+          xm:
+            mapper: debug
+
+
+fileBaseUrl: http://localhost:${server.port}
+
+#oss
+aliyun:
+  oss:
+    endpoint: oss-cn-shanghai.aliyuncs.com
+    accessKeyId: LTAI5tSBmRMG6o8GQC8FWR7o
+    accessKeySecret: AZIsaLZPYtWrW2uXGg9Op0PN8xTVQl
+    bucketName: roomyyt
+
+#    setx OSS_ACCESS_KEY_ID "LTAI5tSBmRMG6o8GQC8FWR7o"
+#    setx OSS_ACCESS_KEY_SECRET "AZIsaLZPYtWrW2uXGg9Op0PN8xTVQl"
+#  echo %OSS_ACCESS_KEY_ID%
+#  echo %OSS_ACCESS_KEY_SECRET%

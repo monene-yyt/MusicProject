@@ -1,0 +1,83 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.xm.mapper.CourseMapper">
+
+    <select id="selectAll" resultType="com.example.xm.entity.Course">
+        select course.*, teacher.name as teacherName,teacher.avatar as teacherAvatar from `course`
+        left join teacher on course.teacher_id = teacher.id
+        <where>
+            <if test="name != null"> and course.name like concat('%', #{name}, '%')</if>
+            <if test="teacherId != null"> and teacher_id = #{teacherId}</if>
+            <if test="level != null"> and level = #{level}</if>
+        </where>
+    </select>
+
+    <delete id="deleteById">
+        delete from `course`
+        where id = #{id}
+    </delete>
+
+    <!-- insert into course (username, password, ...) values ('course', 'course', ...) -->
+    <insert id="insert" parameterType="com.example.xm.entity.Course" useGeneratedKeys="true">
+        insert into `course`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null">name,</if>
+            <if test="img != null">img,</if>
+            <if test="score != null">score,</if>
+            <if test="teacherId != null">teacher_id,</if>
+            <if test="level != null">level,</if>
+            <if test="videoUrl != null">video_url,</if>
+            <if test="desp != null">desp,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="img != null">#{img},</if>
+            <if test="score != null">#{score},</if>
+            <if test="teacherId != null">#{teacherId},</if>
+            <if test="level != null">#{level},</if>
+            <if test="videoUrl != null">#{videoUrl},</if>
+            <if test="desp != null">#{desp},</if>
+        </trim>
+    </insert>
+    <update id="addStudyCount">
+        update course
+        set
+            study_count = study_count +1
+        where
+            id=#{courseId}
+    </update>
+    <update id="removeStudyCount">
+        update course
+        set
+            study_count = study_count - 1
+        where
+            id=#{courseId}
+    </update>
+
+
+    <update id="updateById" parameterType="com.example.xm.entity.Course">
+        update `course`
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="img != null">
+                img = #{img},
+            </if>
+            <if test="score != null">
+                score = #{score},
+            </if>
+            <if test="level != null">
+                level = #{level},
+            </if>
+            <if test="desp != null">
+                desp = #{desp},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>
